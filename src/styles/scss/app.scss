@@ -1,0 +1,227 @@
+@import './variables';
+@import 'bootstrap/scss/bootstrap';
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: $body-color;
+  background: linear-gradient(180deg, #f5f8fb 0%, #eaf0f4 100%);
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid $gray-border;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0.2rem 1.5rem rgba(0, 0, 0, 0.05);
+}
+
+.app-header__inner {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 1.6rem 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.app-brand__logo {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $green 0%, $green-dark 100%);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  box-shadow: 0 1rem 2rem rgba(13, 91, 61, 0.2);
+}
+
+.app-brand__content {
+  display: grid;
+}
+
+.app-brand__title {
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.app-brand__subtitle {
+  color: #60707f;
+  font-size: 1.2rem;
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+}
+
+.app-user {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.app-user__name {
+  font-weight: 700;
+}
+
+.app-shell {
+  padding: 2.4rem 0 4rem;
+}
+
+.app-logout-btn {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #fde8e8;
+    border-color: #f5b5b5;
+    color: #b42318;
+  }
+}
+
+.courts-page {
+  max-width: 112rem;
+  margin: 0 auto;
+  padding: 3.2rem 2rem;
+}
+
+.courts-page__header {
+  margin-bottom: 2.4rem;
+
+  h1 {
+    font-size: 3.6rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    margin: 0;
+    color: #60707f;
+  }
+}
+
+.courts-page__loading,
+.courts-page__empty {
+  background: #fff;
+  border: 1px solid $gray-border;
+  border-radius: $border-radius;
+  padding: 2rem;
+  box-shadow: 0 0 2.4rem -0.8rem rgba(0, 0, 0, 0.08);
+}
+
+.courts-table-wrapper {
+  background: #fff;
+  border: 1px solid $gray-border;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: 0 0 2.4rem -0.8rem rgba(0, 0, 0, 0.08);
+}
+
+.courts-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: $green-dark;
+    color: #fff;
+  }
+
+  th,
+  td {
+    padding: 1.4rem 1.6rem;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $gray-border;
+  }
+
+  tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  tbody tr:hover {
+    background: $gray-soft;
+  }
+}
+
+.courts-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.courts-messages {
+  display: grid;
+  gap: 1.2rem;
+  margin: 1.6rem 0 2rem;
+}
+
+.courts-message {
+  border-radius: 1.2rem;
+  padding: 1.2rem 1.6rem;
+  font-weight: 700;
+}
+
+.courts-message--success {
+  background: #dff4e9;
+  color: $green-dark;
+}
+
+.courts-message--error {
+  background: #f8dde4;
+  color: #7c2038;
+}
+
+.courts-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.6rem;
+}
+
+.btn {
+  border-radius: 1rem;
+}
+
+@media (max-width: 767px) {
+  .app-header__inner {
+    padding: 1.4rem 1.6rem;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .app-header__actions,
+  .app-user {
+    width: 100%;
+  }
+
+  .app-user {
+    justify-content: space-between;
+  }
+
+  .courts-page {
+    padding: 2.4rem 1.6rem;
+  }
+
+  .courts-actions {
+    flex-direction: column;
+  }
+}

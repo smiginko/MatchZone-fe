@@ -1,0 +1,26 @@
+<header class="app-header">
+    <div class="app-header__inner">
+        <div class="app-brand">
+            <div class="app-brand__logo">MZ</div>
+            <div class="app-brand__content">
+                <strong class="app-brand__title">MatchZone</strong>
+                <span class="app-brand__subtitle">Sprava sportovych kurtov</span>
+            </div>
+        </div>
+
+        <div class="app-header__actions">
+            @if (user(); as currentUser) {
+                <div class="app-user">
+                    <span class="app-user__name">{{ currentUser.name }}</span>
+                    <button type="button" class="btn btn-outline-secondary app-logout-btn" (click)="logout()">Odhlasit sa</button>
+                </div>
+            } @else {
+                <button type="button" class="btn btn-primary" (click)="login()">Prihlasit sa</button>
+            }
+        </div>
+    </div>
+</header>
+
+<main class="app-shell">
+    <router-outlet></router-outlet>
+</main>

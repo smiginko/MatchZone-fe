@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$black: #24303a;
+$green: #16724f;
+$green-dark: #0d5b3d;
+$red: #9d455b;
+$gray-bg: #eef2f5;
+$gray-soft: #f7f9fb;
+$gray-border: #d7e0e7;
+
+$body-bg: $gray-bg;
+$body-color: $black;
+$font-size-root: 10px;
+$font-size-base: 1.4rem;
+$font-family-sans-serif: 'IBM Plex Sans', sans-serif;
+
+$input-padding-y: 1.15rem;
+$input-padding-x: 1.4rem;
+$input-font-size: 1.5rem;
+$input-border-color: $gray-border;
+$input-bg: #fff;
+
+$btn-padding-y: 0.8rem;
+$btn-padding-x: 1.8rem;
+$btn-font-weight: bold;
+$btn-font-size: 1.4rem;
+
+$card-bg: #fff;
+$border-radius: 1.6rem;
+
+$theme-colors: (
+  "primary": $green-dark,
+  "success": $green,
+  "danger": $red,
+  "dark": $black,
+  "white": #fff
+) !default;

@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h2 class="modal-title">{{ isEditMode ? 'Upravit kurt' : 'Pridat kurt' }}</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body">
+    <div class="mb-3">
+        <label for="court-name">Nazov kurtu</label>
+        <input
+                id="court-name"
+                type="text"
+                [(ngModel)]="model.name"
+                class="form-control"
+        >
+    </div>
+
+    <div class="mb-3">
+        <label for="court-sport">Sport</label>
+        <select
+                id="court-sport"
+                [(ngModel)]="model.sport"
+                class="form-select"
+        >
+            <option value="TENNIS">TENNIS</option>
+            <option value="BADMINTON">BADMINTON</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="court-price">Cena za hodinu</label>
+        <input
+                id="court-price"
+                type="number"
+                [(ngModel)]="model.pricePerHour"
+                class="form-control"
+        >
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Zrusit</button>
+    <button type="button" class="btn btn-primary" (click)="save()">Ulozit</button>
+</div>

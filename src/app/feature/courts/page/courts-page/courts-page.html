@@ -1,0 +1,66 @@
+<section class="courts-page">
+    <header class="courts-page__header">
+        <h1>Kurty</h1>
+        <p>Tato stranka zobrazuje vsetky dostupne kurty.</p>
+    </header>
+
+    @if (isAdmin()) {
+        <div class="courts-toolbar">
+            <button type="button" class="btn btn-primary" (click)="onAddCourtClick()">Pridat kurt</button>
+        </div>
+    }
+
+    @if (successMessage() || actionErrorMessage()) {
+        <div class="courts-messages">
+            @if (successMessage()) {
+                <div class="courts-message courts-message--success">{{ successMessage() }}</div>
+            }
+
+            @if (actionErrorMessage()) {
+                <div class="courts-message courts-message--error">{{ actionErrorMessage() }}</div>
+            }
+        </div>
+    }
+
+    @if (loading()) {
+        <p class="courts-page__loading">Nacitavam kurty...</p>
+    } @else if (errorMessage()) {
+        <div class="courts-message courts-message--error">{{ errorMessage() }}</div>
+    } @else if (courts().length === 0) {
+        <div class="courts-page__empty">
+            Zatial nie su evidovane ziadne kurty.
+        </div>
+    } @else {
+        <div class="courts-table-wrapper">
+            <table class="courts-table">
+                <thead>
+                <tr>
+                    <th>Nazov</th>
+                    <th>Sport</th>
+                    <th>Cena za hodinu</th>
+                    @if (isAdmin()) {
+                        <th>Akcie</th>
+                    }
+                </tr>
+                </thead>
+                <tbody>
+                    @for (court of courts(); track court.id) {
+                        <tr>
+                            <td>{{ court.name }}</td>
+                            <td>{{ court.sport }}</td>
+                            <td>{{ court.pricePerHour }} EUR/hod</td>
+                            @if (isAdmin()) {
+                                <td>
+                                    <div class="courts-actions">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onEditCourtClick(court)">Upravit</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm" (click)="onDeleteCourtClick(court)">Zmazat</button>
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
