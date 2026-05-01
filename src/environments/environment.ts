@@ -1,5 +1,5 @@
 export const environment = {
-  keyCloakUrl: 'http://localhost:8081',
-  beUrl: 'http://localhost:8080/api/v1',
-  appUrl: 'http://localhost:4200',
+  keyCloakUrl: 'https://keycloak.20.234.18.69.nip.io/auth',
+  beUrl: 'https://app.20.234.18.69.nip.io/api/v1',
+  appUrl: 'https://app.20.234.18.69.nip.io',
 };
