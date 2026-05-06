@@ -40,7 +40,7 @@ deploy:
    - mkdir -p ~/.kube
    - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
  script:
-   - kubectl set image deployment/$K8S_DEPLOYMENT $K8S_CONTAINER=$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION -n app
+   - kubectl set image deployment/$K8S_DEPLOYMENT $K8S_CONTAINER=$ACR_REGISTRY/$IMAGE_NAME:latest -n app
    - kubectl rollout restart deployment/matchzone-fe -n app
    - kubectl rollout status deployment/$K8S_DEPLOYMENT -n app --timeout=180s
  only:
