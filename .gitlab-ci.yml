@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  MAGE_NAME: "matchzone-frontend"
+  IMAGE_NAME: "matchzone-frontend"
   INFRA_REPO_URL: "gitlab.fullstackacademy.sk/fsa-ziacik/matchzone-infrastructure.git"
   K8S_MANIFEST_DIR: "kubernates/workload/04-app-frontend"
   DOCKER_DRIVER: overlay2
@@ -22,8 +22,8 @@ build:
     - until docker info &>/dev/null; do sleep 2 && echo "Cakam na Docker daemon..."; done
     - export IMAGE_VERSION="${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
   script:
-    - git clone "https://gitlab-ci-token:${CI_JOB_TOKEN}@${INFRA_REPO_URL}" infrastructure
-    - kubectl apply -f "infrastructure/$K8S_MANIFEST_DIR"
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "https://$ACR_REGISTRY"
+    - docker build -t "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION" -t "$ACR_REGISTRY/$IMAGE_NAME:latest" .
     - docker push "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
     - docker push "$ACR_REGISTRY/$IMAGE_NAME:latest"
   only:
@@ -38,7 +38,8 @@ deploy:
     - mkdir -p ~/.kube
     - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
   script:
-    - kubectl set image deployment/matchzone-fe matchzone-fe=$ACR_REGISTRY/$IMAGE_NAME:latest -n app
+    - git clone "https://gitlab-ci-token:${CI_JOB_TOKEN}@${INFRA_REPO_URL}" infrastructure
+    - kubectl apply -f "infrastructure/$K8S_MANIFEST_DIR"
     - kubectl rollout restart deployment/matchzone-fe -n app
     - kubectl rollout status deployment/matchzone-fe -n app --timeout=180s
   only:
