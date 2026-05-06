@@ -1,0 +1,47 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: "matchzone-frontend"
+  K8S_NAMESPACE: "app"
+  K8S_DEPLOYMENT: "matchzone-fe"
+  K8S_CONTAINER: "matchzone-fe"
+  K8S_MANIFEST_DIR: "kubernates/workload/04-app-frontend"
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://127.0.0.1:2375
+  DOCKER_TLS_VERIFY: ""
+  DOCKER_TLS_CERTDIR: ""
+
+build:
+  stage: build
+  tags:
+    - fsa-ziacik
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - until docker info &>/dev/null; do sleep 2 && echo "Cakam na Docker daemon..."; done
+    - export IMAGE_VERSION="${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+  script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "https://$ACR_REGISTRY"
+    - docker build -t "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION" -t "$ACR_REGISTRY/$IMAGE_NAME:latest" .
+    - docker push "$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
+    - docker push "$ACR_REGISTRY/$IMAGE_NAME:latest"
+  only:
+    - master
+
+deploy:
+ stage: deploy
+ tags:
+   - fsa-ziacik
+ image: alpine/k8s:1.32.3
+ before_script:
+   - mkdir -p ~/.kube
+   - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
+ script:
+   - kubectl set image deployment/$K8S_DEPLOYMENT $K8S_CONTAINER=$ACR_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION -n app
+   - kubectl rollout restart deployment/matchzone-fe -n app
+   - kubectl rollout status deployment/$K8S_DEPLOYMENT -n app --timeout=180s
+ only:
+   - master
